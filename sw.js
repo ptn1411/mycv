@@ -117,6 +117,11 @@ self.addEventListener("activate", (e) => {
 
 self.addEventListener('fetch', e => {
     e.respondWith(
-        caches.match(e.request)
+        caches.open("dynamiccache").then(function (cache) {
+            return fetch(e.request).then(function (res) {
+                cache.put(e.request, res.clone());
+                return res;
+            })
+        })
     )
 })
