@@ -1,4 +1,4 @@
-//importScripts('https://cdnjs.cloudflare.com/ajax/libs/cache.adderall/1.0.0/cache.adderall.js');
+importScripts('https://cdnjs.cloudflare.com/ajax/libs/cache.adderall/1.0.0/cache.adderall.js');
 
 const staticCache = "static-cache";
 
@@ -76,7 +76,7 @@ const assets = [
     "./webfonts/fa-solid-900.woff",
     "./webfonts/fa-solid-900.woff2",
     "./sw.js",
-    //"https://cdnjs.cloudflare.com/ajax/libs/cache.adderall/1.0.0/cache.adderall.js",
+    "https://cdnjs.cloudflare.com/ajax/libs/cache.adderall/1.0.0/cache.adderall.js",
 ];
 const limitCacheSize = (name, size) => {
     console.log("limit cache size");
@@ -102,19 +102,14 @@ const limitNumCache = (cacheName, num) => {
 
 
 self.addEventListener("install", (e) => {
-    // e.waitUntil(
-    //     caches.open(staticCache)
-    //         .then(function (cache) {
-    //             console.log('Opened cache');
-    //             adderall.addAll(cache, staticCache)
-    //             // return cache.addAll(assets);
-    //         })
-    // );
-    e.waitUntil((async () => {
-        const cache = await caches.open(staticCache);
-        console.log('Opened cache');
-        await cache.addAll(staticCache);
-    })());
+    e.waitUntil(
+        caches.open(staticCache)
+            .then(function (cache) {
+                console.log('Opened cache');
+                adderall.addAll(cache, staticCache)
+            })
+    );
+
 });
 
 self.addEventListener("activate", (e) => {
@@ -122,11 +117,6 @@ self.addEventListener("activate", (e) => {
 });
 
 self.addEventListener('fetch', e => {
-    // e.respondWith(
-    //     caches.match(e.request).then(function(response) {
-    //         return response || fetch(e.request);
-    //     })
-    // );
     e.respondWith((async () => {
         const r = await caches.match(e.request);
         console.log(`[Service Worker] Fetching resource: ${e.request.url}`);
