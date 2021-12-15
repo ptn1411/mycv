@@ -26,8 +26,8 @@
     }
 ],
   "scope": "https://ptn1411.github.io/mycv/",
-  "id": "https://ptn1411.github.io/mycv/?home=1",
-  "start_url": "https://ptn1411.github.io/mycv/index.html/?home=1",
+  "id": "https://ptn1411.github.io/mycv?home=1",
+  "start_url": "https://ptn1411.github.io/mycv?home=1",
   "background_color": "#ee6f72",
   "display": "standalone",
   "theme_color": "#9e2123",
