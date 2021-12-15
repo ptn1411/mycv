@@ -7,7 +7,7 @@
 if ("serviceWorker" in navigator) {
     navigator.serviceWorker
         .register("https://ptn1411.github.io/mycv/sw.js", {
-            scope: ".", // <--- THIS BIT IS REQUIRED
+            scope: "https://ptn1411.github.io/mycv/", // <--- THIS BIT IS REQUIRED
         })
         .then(
             function (registration) {
