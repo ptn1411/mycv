@@ -25,8 +25,9 @@
         "sizes": "512x512"
     }
 ],
-  "scope": "https://ptn1411.github.io/mycv/",
-  "start_url": "https://ptn1411.github.io/mycv/",
+  "scope": ".",
+  "id": "/?home=1",
+  "start_url": "/?home=1",
   "background_color": "#ee6f72",
   "display": "standalone",
   "theme_color": "#9e2123",
