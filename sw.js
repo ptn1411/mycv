@@ -1,80 +1,78 @@
 const staticCache = "static-cache";
-const dynamicCache = "dynamic-cache";
-var CACHE_NAME = 'my-site-cache-v1';
 
 const assets = [
-    "https://ptn1411.github.io/mycv/",
-    "https://ptn1411.github.io/mycv/index.html",
-    "https://ptn1411.github.io/mycv/js/app.js",
-    "https://ptn1411.github.io/mycv/js/bootstrap.min.js",
-    "https://ptn1411.github.io/mycv/js/contact.js",
-    "https://ptn1411.github.io/mycv/js/custom.js",
-    "https://ptn1411.github.io/mycv/js/imagesloaded.pkgd.min.js",
-    "https://ptn1411.github.io/mycv/js/infinite-scroll.min.js",
-    "https://ptn1411.github.io/mycv/js/isotope.pkgd.min.js",
-    "https://ptn1411.github.io/mycv/js/jquery.counterup.min.js",
-    "https://ptn1411.github.io/mycv/js/jquery.easing.min.js",
-    "https://ptn1411.github.io/mycv/js/jquery.mCustomScrollbar.concat.min.js",
-    "https://ptn1411.github.io/mycv/js/jquery.waypoints.min.js",
-    "https://ptn1411.github.io/mycv/js/jquery-1.12.3.min.js",
-    "https://ptn1411.github.io/mycv/js/popper.min.js",
-    "https://ptn1411.github.io/mycv/js/slick.min.js",
-    "https://ptn1411.github.io/mycv/js/validator.js",
-    "https://ptn1411.github.io/mycv/images/ajax-loader.gif",
-    "https://ptn1411.github.io/mycv/images/70x70.png",
-    "https://ptn1411.github.io/mycv/images/android-chrome-192x192.png",
-    "https://ptn1411.github.io/mycv/images/android-chrome-512x512.png",
-    "https://ptn1411.github.io/mycv/images/images/apple-touch-icon.png",
-    "https://ptn1411.github.io/mycv/images/favicon.ico",
-    "https://ptn1411.github.io/mycv/images/favicon-16x16.png",
-    "https://ptn1411.github.io/mycv/images/touchicon-180.png",
-    "https://ptn1411.github.io/mycv/images/Nodejs_logo_light.png",
-    "https://ptn1411.github.io/mycv/images/mysql.jpg",
-    "https://ptn1411.github.io/mycv/images/images.png",
-    "https://ptn1411.github.io/mycv/images/bootstrap-social.png",
-    "https://ptn1411.github.io/mycv/fonts/glyphicons-halflings-regular.eot",
-    "https://ptn1411.github.io/mycv/fonts/glyphicons-halflings-regular.svg",
-    "https://ptn1411.github.io/mycv/fonts/glyphicons-halflings-regular.ttf",
-    "https://ptn1411.github.io/mycv/fonts/glyphicons-halflings-regular.woff",
-    "https://ptn1411.github.io/mycv/fonts/glyphicons-halflings-regular.woff2",
-    "https://ptn1411.github.io/mycv/fonts/Simple-Line-Icons.eot",
-    "https://ptn1411.github.io/mycv/fonts/Simple-Line-Icons.svg",
-    "https://ptn1411.github.io/mycv/fonts/Simple-Line-Icons.ttf",
-    "https://ptn1411.github.io/mycv/fonts/Simple-Line-Icons.woff",
-    "https://ptn1411.github.io/mycv/fonts/Simple-Line-Icons.woff2",
-    "https://ptn1411.github.io/mycv/fonts/slick.eot",
-    "https://ptn1411.github.io/mycv/fonts/slick.svg",
-    "https://ptn1411.github.io/mycv/fonts/slick.ttf",
-    "https://ptn1411.github.io/mycv/fonts/slick.woff",
-    "https://ptn1411.github.io/mycv/css/all.min.css",
-    "https://ptn1411.github.io/mycv/css/bootstrap.min.css",
-    "https://ptn1411.github.io/mycv/css/jquery.mCustomScrollbar.min.css",
-    "https://ptn1411.github.io/mycv/css/simple-line-icons.css",
-    "https://ptn1411.github.io/mycv/css/slick.css",
-    "https://ptn1411.github.io/mycv/css/style.scss",
-    "https://ptn1411.github.io/mycv/css/sass/base.scss",
-    "https://ptn1411.github.io/mycv/css/sass/buttons.scss",
-    "https://ptn1411.github.io/mycv/css/sass/elements.scss",
-    "https://ptn1411.github.io/mycv/css/sass/header.scss",
-    "https://ptn1411.github.io/mycv/css/sass/main.scss",
-    "https://ptn1411.github.io/mycv/css/sass/mixins.scss",
-    "https://ptn1411.github.io/mycv/css/sass/responsive.scss",
-    "https://ptn1411.github.io/mycv/css/sass/slick.scss",
-    "https://ptn1411.github.io/mycv/webfonts/fa-brands-400.eot",
-    "https://ptn1411.github.io/mycv/webfonts/fa-brands-400.svg",
-    "https://ptn1411.github.io/mycv/webfonts/fa-brands-400.ttf",
-    "https://ptn1411.github.io/mycv/webfonts/fa-brands-400.woff",
-    "https://ptn1411.github.io/mycv/webfonts/fa-brands-400.woff2",
-    "https://ptn1411.github.io/mycv/webfonts/fa-regular-400.eot",
-    "https://ptn1411.github.io/mycv/webfonts/fa-regular-400.svg",
-    "https://ptn1411.github.io/mycv/webfonts/fa-regular-400.ttf",
-    "https://ptn1411.github.io/mycv/webfonts/fa-regular-400.woff",
-    "https://ptn1411.github.io/mycv/webfonts/fa-regular-400.woff2",
-    "https://ptn1411.github.io/mycv/webfonts/fa-solid-900.eot",
-    "https://ptn1411.github.io/mycv/webfonts/fa-solid-900.svg",
-    "https://ptn1411.github.io/mycv/webfonts/fa-solid-900.ttf",
-    "https://ptn1411.github.io/mycv/webfonts/fa-solid-900.woff",
-    "https://ptn1411.github.io/mycv/webfonts/fa-solid-900.woff2",
+    "./",
+    "./index.html",
+    "./js/app.js",
+    "./js/bootstrap.min.js",
+    "./js/contact.js",
+    "./js/custom.js",
+    "./js/imagesloaded.pkgd.min.js",
+    "./js/infinite-scroll.min.js",
+    "./js/isotope.pkgd.min.js",
+    "./js/jquery.counterup.min.js",
+    "./js/jquery.easing.min.js",
+    "./js/jquery.mCustomScrollbar.concat.min.js",
+    "./js/jquery.waypoints.min.js",
+    "./js/jquery-1.12.3.min.js",
+    "./js/popper.min.js",
+    "./js/slick.min.js",
+    "./js/validator.js",
+    "./images/ajax-loader.gif",
+    "./images/70x70.png",
+    "./images/android-chrome-192x192.png",
+    "./images/android-chrome-512x512.png",
+    "./images/images/apple-touch-icon.png",
+    "./images/favicon.ico",
+    "./images/favicon-16x16.png",
+    "./images/touchicon-180.png",
+    "./images/Nodejs_logo_light.png",
+    "./images/mysql.jpg",
+    "./images/images.png",
+    "./images/bootstrap-social.png",
+    "./fonts/glyphicons-halflings-regular.eot",
+    "./fonts/glyphicons-halflings-regular.svg",
+    "./fonts/glyphicons-halflings-regular.ttf",
+    "./fonts/glyphicons-halflings-regular.woff",
+    "./fonts/glyphicons-halflings-regular.woff2",
+    "./fonts/Simple-Line-Icons.eot",
+    "./fonts/Simple-Line-Icons.svg",
+    "./fonts/Simple-Line-Icons.ttf",
+    "./fonts/Simple-Line-Icons.woff",
+    "./fonts/Simple-Line-Icons.woff2",
+    "./fonts/slick.eot",
+    "./fonts/slick.svg",
+    "./fonts/slick.ttf",
+    "./fonts/slick.woff",
+    "./css/all.min.css",
+    "./css/bootstrap.min.css",
+    "./css/jquery.mCustomScrollbar.min.css",
+    "./css/simple-line-icons.css",
+    "./css/slick.css",
+    "./css/style.scss",
+    "./css/sass/base.scss",
+    "./css/sass/buttons.scss",
+    "./css/sass/elements.scss",
+    "./css/sass/header.scss",
+    "./css/sass/main.scss",
+    "./css/sass/mixins.scss",
+    "./css/sass/responsive.scss",
+    "./css/sass/slick.scss",
+    "./webfonts/fa-brands-400.eot",
+    "./webfonts/fa-brands-400.svg",
+    "./webfonts/fa-brands-400.ttf",
+    "./webfonts/fa-brands-400.woff",
+    "./webfonts/fa-brands-400.woff2",
+    "./webfonts/fa-regular-400.eot",
+    "./webfonts/fa-regular-400.svg",
+    "./webfonts/fa-regular-400.ttf",
+    "./webfonts/fa-regular-400.woff",
+    "./webfonts/fa-regular-400.woff2",
+    "./webfonts/fa-solid-900.eot",
+    "./webfonts/fa-solid-900.svg",
+    "./webfonts/fa-solid-900.ttf",
+    "./webfonts/fa-solid-900.woff",
+    "./webfonts/fa-solid-900.woff2",
 ];
 const limitCacheSize = (name, size) => {
     console.log("limit cache size");
@@ -97,114 +95,26 @@ const limitNumCache = (cacheName, num) => {
         });
     });
 };
-// const limitNumCache = (cacheName, num) => {
-//     caches.open(cacheName).then(cache => {
-//         cache.keys().then(keys => {
-//             if (keys.length > num) {
-//                 cache.delete(keys[0]).then(limitNumCache(cacheName, num));
-//             }
-//         })
-//     })
-// }
-//install processs
+
 
 self.addEventListener("install", (e) => {
-    // e.waitUntil(
-    //     caches.open(staticCache).then((cache) => {
-    //         cache.addAll(assets);
-    //     })
-    // );
     e.waitUntil(
-        caches.open(CACHE_NAME)
-            .then(function(cache) {
+        caches.open(staticCache)
+            .then(function (cache) {
                 console.log('Opened cache');
                 return cache.addAll(assets);
             })
     );
 });
 
-//activate
 self.addEventListener("activate", (e) => {
     console.log("avtivate");
 });
 
-self.addEventListener("fetch", function (event) {
-});
-// self.addEventListener('fetch', e => {
-//     e.respondWith(
-//         caches.match(e.request).then(staticRes => {
-//             return staticRes || fetch(e.request).then(dynamicRes => {
-//                 return caches.open(dynamicCache).then(cache => {
-//                     cache.put(e.request.url, dynamicRes.clone())
-//                     return dynamicRes
-//                 })
-//             })
-//         }).catch(() => caches.match('/pages/fallback.html'))
-//     )
-//
-//
-// })
+self.addEventListener('fetch', e => {
 
-// self.addEventListener('fetch', e => {
-//     console.log('fetch events', e)
-//     if (e.request.url.indexOf('firestore.googleapis.com') === -1) {
-//         //if not making the request from google, then can do caching
-//         e.respondWith(
-//             caches.match(e.request).then(cacheRes => {
-//                 return cacheRes || fetch(e.request).then(fetchRes => {
-//                     return caches.open(dynamicCache).then(cache => {
-//                         cache.put(e.request.url, fetchRes.clone());
-//                         limitCacheSize(dynamicCache, 3)
-//                         return fetchRes
-//                     })
-//                 })
-//             }).catch(() => {
-//                 if (e.request.url.indexOf('.html') > -1) {
-//                     return caches.match('/pages/fallback.html');
+    e.respondWith(
+        caches.match(e.request)
+    )
 
-//                 }
-
-//             })
-//         )
-//     }
-
-// })
-
-// network first
-// self.addEventListener('fetch', e => {
-
-//     e.respondWith(
-//         fetch(e.request).then(fetchRes => {
-//             return caches.open(dynamicCache).then(cache => {
-//                 cache.put(e.request.url, fetchRes.clone());
-//                 return fetchRes
-//             })
-//         }).catch(function () {
-//             return caches.match(e.request);
-//         })
-//     )
-
-// })
-// self.addEventListener('fetch', evt => {
-//     evt.respondWith(
-//         fetch(evt.request).then(fetchRes => {
-//             return caches.open(dynamicCacheName).then(cache => {
-//                 cache.put(evt.request.url, fetchRes.clone());
-//                 return fetchRes
-//             })
-//         })
-//             .catch(function () {
-//                 console.log(evt.request, 'match', caches.match(evt.request));
-//                 return caches.match(evt.request);
-//             })
-//     )
-
-// })
-//cache only
-// self.addEventListener('fetch', e => {
-
-//     e.respondWith(
-//         caches.match(e.request)
-//     )
-
-// })
+})
