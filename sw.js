@@ -1,6 +1,9 @@
 importScripts('https://cdnjs.cloudflare.com/ajax/libs/cache.adderall/1.0.0/cache.adderall.js');
 
 const staticCache = "static-cache";
+const OFFLINE_VERSION = 1;
+const CACHE_NAME = 'offline';
+const OFFLINE_URL = 'offline.html';
 
 const assets = [
     "/",
@@ -109,33 +112,49 @@ self.addEventListener("install", (e) => {
                 adderall.addAll(cache, staticCache)
             })
     );
+    e.waitUntil((async () => {
+        const cache = await caches.open(CACHE_NAME);
+        caches.open(staticCache)
+            .then(function (cache) {
+                console.log('Opened cache');
+                adderall.addAll(cache, staticCache)
+            })
+        await cache.add(new Request(OFFLINE_URL, {cache: 'reload'}));
+    })());
 
 });
 
 self.addEventListener("activate", (e) => {
-    console.log("avtivate");
+    e.waitUntil((async () => {
+
+        if ('navigationPreload' in self.registration) {
+            await self.registration.navigationPreload.enable();
+        }
+    })());
+    self.clients.claim();
 });
 
-self.addEventListener('fetch', e => {
-    e.respondWith(
-        caches.match(e.request).then(function (response) {
-            if (response) {
-                console.log('Found response in cache:', response);
+self.addEventListener('fetch', (event) => {
 
-                return response;
+    if (event.request.mode === 'navigate') {
+        event.respondWith((async () => {
+            try {
+
+                const preloadResponse = await event.preloadResponse;
+                if (preloadResponse) {
+                    return preloadResponse;
+                }
+
+                const networkResponse = await fetch(event.request);
+                return networkResponse;
+            } catch (error) {
+                console.log('Fetch failed; returning offline page instead.', error);
+
+                const cache = await caches.open(CACHE_NAME);
+                const cachedResponse = await cache.match(OFFLINE_URL);
+                return cachedResponse;
             }
+        })());
+    }
 
-            console.log('No response found in cache. About to fetch from network...');
-
-            return fetch(e.request).then(function (response) {
-                console.log('Response from network is:', response);
-
-                return response;
-            }).catch(function (error) {
-                console.error('Fetching failed:', error);
-
-                return caches.match('index.html');
-            });
-        })
-    );
-})
+});
