@@ -1,4 +1,4 @@
-importScripts('https://cdnjs.cloudflare.com/ajax/libs/cache.adderall/1.0.0/cache.adderall.js');
+//importScripts('https://cdnjs.cloudflare.com/ajax/libs/cache.adderall/1.0.0/cache.adderall.js');
 
 const staticCache = "static-cache";
 
@@ -76,7 +76,7 @@ const assets = [
     "https://ptn1411.github.io/mycv/webfonts/fa-solid-900.woff",
     "https://ptn1411.github.io/mycv/webfonts/fa-solid-900.woff2",
     "https://ptn1411.github.io/mycv/sw.js",
-    "https://cdnjs.cloudflare.com/ajax/libs/cache.adderall/1.0.0/cache.adderall.js",
+    //"https://cdnjs.cloudflare.com/ajax/libs/cache.adderall/1.0.0/cache.adderall.js",
 ];
 const limitCacheSize = (name, size) => {
     console.log("limit cache size");
@@ -102,14 +102,19 @@ const limitNumCache = (cacheName, num) => {
 
 
 self.addEventListener("install", (e) => {
-    e.waitUntil(
-        caches.open(staticCache)
-            .then(function (cache) {
-                console.log('Opened cache');
-                adderall.addAll(cache, staticCache)
-                // return cache.addAll(assets);
-            })
-    );
+    // e.waitUntil(
+    //     caches.open(staticCache)
+    //         .then(function (cache) {
+    //             console.log('Opened cache');
+    //             adderall.addAll(cache, staticCache)
+    //             // return cache.addAll(assets);
+    //         })
+    // );
+    e.waitUntil((async () => {
+        const cache = await caches.open(staticCache);
+        console.log('Opened cache');
+        await cache.addAll(staticCache);
+    })());
 });
 
 self.addEventListener("activate", (e) => {
@@ -117,5 +122,19 @@ self.addEventListener("activate", (e) => {
 });
 
 self.addEventListener('fetch', e => {
-    console.log("fetch");
+    // e.respondWith(
+    //     caches.match(e.request).then(function(response) {
+    //         return response || fetch(e.request);
+    //     })
+    // );
+    e.respondWith((async () => {
+        const r = await caches.match(e.request);
+        console.log(`[Service Worker] Fetching resource: ${e.request.url}`);
+        if (r) { return r; }
+        const response = await fetch(e.request);
+        const cache = await caches.open(staticCache);
+        console.log(`[Service Worker] Caching new resource: ${e.request.url}`);
+        await cache.put(e.request, response.clone());
+        return response;
+    })());
 })
