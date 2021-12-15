@@ -1,7 +1,8 @@
 const staticCache = "static-cache";
 const dynamicCache = "dynamic-cache";
+var CACHE_NAME = 'my-site-cache-v1';
+
 const assets = [
-    "/",
     "https://ptn1411.github.io/mycv/",
     "https://ptn1411.github.io/mycv/index.html",
     "https://ptn1411.github.io/mycv/js/app.js",
@@ -108,10 +109,17 @@ const limitNumCache = (cacheName, num) => {
 //install processs
 
 self.addEventListener("install", (e) => {
+    // e.waitUntil(
+    //     caches.open(staticCache).then((cache) => {
+    //         cache.addAll(assets);
+    //     })
+    // );
     e.waitUntil(
-        caches.open(staticCache).then((cache) => {
-            cache.addAll(assets);
-        })
+        caches.open(CACHE_NAME)
+            .then(function(cache) {
+                console.log('Opened cache');
+                return cache.addAll(assets);
+            })
     );
 });
 
