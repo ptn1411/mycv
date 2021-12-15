@@ -1,3 +1,5 @@
+importScripts('https://cdnjs.cloudflare.com/ajax/libs/cache.adderall/1.0.0/cache.adderall.js');
+
 const staticCache = "static-cache";
 
 const assets = [
@@ -102,7 +104,8 @@ self.addEventListener("install", (e) => {
         caches.open(staticCache)
             .then(function (cache) {
                 console.log('Opened cache');
-                return cache.addAll(assets);
+                adderall.addAll(cache, staticCache)
+                // return cache.addAll(assets);
             })
     );
 });
