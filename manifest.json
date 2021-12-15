@@ -32,9 +32,5 @@
   "background_color": "#ee6f72",
   "display": "standalone",
   "theme_color": "#9e2123",
-  "orientation": "portrait-primary",
-  "serviceworker": {
-    "src": "sw.js",
-    "scope": "https://ptn1411.github.io/mycv/"
-  }
+  "orientation": "portrait-primary"
 }
