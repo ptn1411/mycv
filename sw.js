@@ -117,14 +117,25 @@ self.addEventListener("activate", (e) => {
 });
 
 self.addEventListener('fetch', e => {
-    e.respondWith((async () => {
-        const r = await caches.match(e.request);
-        console.log(`[Service Worker] Fetching resource: ${e.request.url}`);
-        if (r) { return r; }
-        const response = await fetch(e.request);
-        const cache = await caches.open(staticCache);
-        console.log(`[Service Worker] Caching new resource: ${e.request.url}`);
-        await cache.put(e.request, response.clone());
-        return response;
-    })());
+    e.respondWith(
+        caches.match(e.request).then(function (response) {
+            if (response) {
+                console.log('Found response in cache:', response);
+
+                return response;
+            }
+
+            console.log('No response found in cache. About to fetch from network...');
+
+            return fetch(e.request).then(function (response) {
+                console.log('Response from network is:', response);
+
+                return response;
+            }).catch(function (error) {
+                console.error('Fetching failed:', error);
+
+                return caches.match('index.html');
+            });
+        })
+    );
 })
