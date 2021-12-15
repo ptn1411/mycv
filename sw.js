@@ -4,6 +4,7 @@ const staticCache = "static-cache";
 
 const assets = [
     "https://ptn1411.github.io/mycv/",
+    "https://ptn1411.github.io/mycv/sw.js",
     "https://cdnjs.cloudflare.com/ajax/libs/cache.adderall/1.0.0/cache.adderall.js",
     "https://ptn1411.github.io/mycv/index.html",
     "https://ptn1411.github.io/mycv/js/app.js",
