@@ -1,13 +1,13 @@
 importScripts('https://cdnjs.cloudflare.com/ajax/libs/cache.adderall/1.0.0/cache.adderall.js');
 
 const staticCache = "static-cache";
-const OFFLINE_VERSION = 1;
 const CACHE_NAME = 'offline';
 const OFFLINE_URL = 'offline.html';
 
 const assets = [
     "/",
     "./index.html",
+    "./offline.html",
     "./js/app.js",
     "./js/bootstrap.min.js",
     "./js/contact.js",
